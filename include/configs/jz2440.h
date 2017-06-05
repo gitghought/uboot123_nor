@@ -37,6 +37,8 @@
 #define	CONFIG_S3C2410		1	/* in a SAMSUNG S3C2410 SoC     */
 #define CONFIG_SMDK2410		1	/* on a SAMSUNG SMDK2410 Board  */
 
+#define	CONFIG_S3C2440		1	
+
 /* input clock of PLL */
 #define CONFIG_SYS_CLK_FREQ	12000000/* the SMDK2410 has 12MHz input clock */
 
