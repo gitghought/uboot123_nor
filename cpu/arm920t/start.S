@@ -133,7 +133,7 @@ copyex:
 	bne	copyex
 #endif
 
-#if defined(CONFIG_S3C2400) || defined(CONFIG_S3C2410)
+#if defined(CONFIG_S3C2400) || defined(CONFIG_S3C2410) || defined (CONFIG_S3C2440)
 	/* turn off the watchdog */
 
 # if defined(CONFIG_S3C2400)
@@ -146,6 +146,12 @@ copyex:
 #  define INTSUBMSK	0x4A00001C
 #  define CLKDIVN	0x4C000014	/* clock divisor register */
 # endif
+
+#define CLK_CTL_BASE 0x4C000000
+#define MDIV_405 0x5c << 12
+#define PSDIV_405 0x011
+#define MDIV_200 0xa1 << 12
+#define PSDIV_200 0x31
 
 	ldr     r0, =pWTCON
 	mov     r1, #0x0
@@ -163,12 +169,51 @@ copyex:
 	str	r1, [r0]
 # endif
 
+#if defined(CONFIG_S3C2440)
+	ldr	r1, =0x7fff
+	ldr	r0, =INTSUBMSK
+	str	r1, [r0]
+#endif /*CONFIG_S3C2440*/
+
+#if defined(CONFIG_S3C2440)
+#define MPLLCON   0x4C000004 
+
+#define UPLLCON   0x4C000008  
+
+    ldr  r0, =CLKDIVN        
+    mov  r1, #5
+    str  r1, [r0]
+
+mrc p15, 0, r1, c1, c0, 0 /*read ctrl register */
+orr r1, r1, #0xc0000000 /*Asynchronous */
+mcr p15, 0, r1, c1, c0, 0 /*write ctrl register */
+ 
+
+    ldr  r0, =MPLLCON 
+
+    ldr  r1, =0x5c011
+
+    str  r1, [r0]
+
+ 
+
+    ldr  r0, =UPLLCON 
+
+    ldr  r1, =0x38022
+
+    str  r1, [r0]
+
+
+#else 
+
 	/* FCLK:HCLK:PCLK = 1:2:4 */
 	/* default FCLK is 120 MHz ! */
 	ldr	r0, =CLKDIVN
 	mov	r1, #3
 	str	r1, [r0]
-#endif	/* CONFIG_S3C2400 || CONFIG_S3C2410 */
+#endif /*CONFIG_S3C2440*/
+
+#endif	/* CONFIG_S3C2400 || CONFIG_S3C2410  || CONFIG_S3C2440*/
 
 	/*
 	 * we do sys-critical inits only at reboot,
