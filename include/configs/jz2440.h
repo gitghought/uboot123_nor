@@ -55,9 +55,16 @@
 /*
  * Hardware drivers
  */
-#define CONFIG_DRIVER_CS8900	1	/* we have a CS8900 on-board */
-#define CS8900_BASE		0x19000300
-#define CS8900_BUS16		1 /* the Linux driver does accesses as shorts */
+//#define CONFIG_DRIVER_CS8900	1	/* we have a CS8900 on-board */
+//#define CS8900_BASE		0x19000300
+//#define CS8900_BUS16		1 /* the Linux driver does accesses as shorts */
+
+#define CONFIG_DRIVER_DM9000       1
+#define CONFIG_DM9000_BASE      0x20000000
+#define DM9000_IO            CONFIG_DM9000_BASE
+#define DM9000_DATA         (CONFIG_DM9000_BASE + 4)
+#define CONFIG_DM9000_USE_16BIT 1
+#define CONFIG_CMD_PING 1
 
 /*
  * select serial console configuration
@@ -98,12 +105,15 @@
 #define CFG_NAND_BASE 0x4E000000
 #define NAND_MAX_CHIPS      1
 
+
+
 #define CONFIG_BOOTDELAY	3
 /*#define CONFIG_BOOTARGS	"root=ramfs devfs=mount console=ttySA0,9600" */
-/*#define CONFIG_ETHADDR	08:00:3e:26:0a:5b */
+#define CONFIG_ETHADDR	01:23:45:67:89:ab 
 #define CONFIG_NETMASK          255.255.255.0
-#define CONFIG_IPADDR		10.0.0.110
-#define CONFIG_SERVERIP		10.0.0.1
+#define CONFIG_IPADDR		192.168.1.117
+#define CONFIG_SERVERIP		192.168.1.107
+#define CONFIG_GATEWAYIP 192.168.1.1
 /*#define CONFIG_BOOTFILE	"elinos-lart" */
 /*#define CONFIG_BOOTCOMMAND	"tftp; bootm" */
 
