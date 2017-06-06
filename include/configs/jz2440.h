@@ -93,6 +93,10 @@
 #define CONFIG_CMD_DATE
 #define CONFIG_CMD_ELF
 
+#define CONFIG_CMD_NAND
+#define CFG_MAX_NAND_DEVICE 1
+#define CFG_NAND_BASE 0x4E000000
+#define NAND_MAX_CHIPS      1
 
 #define CONFIG_BOOTDELAY	3
 /*#define CONFIG_BOOTARGS	"root=ramfs devfs=mount console=ttySA0,9600" */
